@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-cn">
+	<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+    <meta name="keywords" content="vtb-music, vtb, vtb
+ Music website">
+    <meta name="description" content="A music website for collecting VTuber songs.">
+	<script type="text/javascript">
+		function check_mobile(){
+			if('ontouchstart' in window) return true;
+			else return false
+		}
+		if(!check_mobile()){
+			let tmp = './index_en.html';
+			if(window.location.href.indexOf('?') != -1)
+				tmp += window.location.href.substring(window.location.href.indexOf('?'));
+			window.location.href = tmp;
+		}
+	</script>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="css/main-mobile_en.css">
+    <title>Vtb-Music</title>
+	</head>
+	<body>
+		<audio id="player" preload="auto">
+  			<source type="audio/mpeg">
+			Sorry, please upgrade your browser
+		</audio>
+		<div id="info" class="info" style="display: none">
+			<span id="info-text">Loading</span>
+		</div>
+		<div id="nav" class="nav-player">
+			<div style="width: 100%;display: inline-block;text-align: center;">
+				<div class="nav-btns" style="position: absolute; left: 0; right: 0; margin: 0 auto;">
+					<a class="nav-btn nav-btn-play-random" id="btn-nav-random"></a>
+					<a class="nav-btn nav-btn-pre" id="btn-nav-pre"></a>
+					<a class="nav-btn nav-btn-play" id="btn-nav-play"></a>
+					<a class="nav-btn nav-btn-nxt" id="btn-nav-nxt"></a>
+					<a class="nav-btn nav-btn-play-repeat" id="btn-nav-repeat"></a>
+					
+				</div>
+				<div class="nav-btns" style="float: right;">
+					<a class="nav-btn nav-btn-list btn-scale" id="btn-nav-list"></a>
+				</div>
+			</div>
+		</div>
+		<div class="playlist" id="playlist" data-ui-on="false">
+			<div class="playlist-title">
+				<span>playlist</span>
+				<span class="playlist-clear" id="btn-playlist-clear">Clear playlist</span>
+			</div>
+			<div class="playlist-list" id="playlist-list">
+			</div>
+		</div>
+		<div id="app-index" style="display: none;">
+			<div class="block" id="app-gallery" style="margin-top: 5rem;">
+				<div>
+					<div class="headline">Browse</div>
+					<div class="left-link" id="index-btn-show-all-songs">all songs</div>
+				</div>
+				<div class="hr"></div>
+				<div class="music-cards-list" id="index-music-cards-list">
+				</div>
+			</div>
+			<div class="block" id="app-figures">
+				<div>
+					<div class="headline">VTuber</div>
+					<div class="left-link" id="index-btn-show-all-figures">All VTuber</div>
+				</div>
+				<div class="hr"></div>
+				<div class="figures-list" id="index-figures-list">
+				</div>
+			</div>
+			<div class="block" id="app-alums">
+				<div class="headline">Song Sheet</div>
+				<div class="hr"></div>
+				<div class="album-cards-list" id="index-alums-list">
+					
+				</div>
+			</div>
+		</div>
+		<div id="app-bigplayer" class="app-bigplayer" style="display: none;">
+			<div class="bigplayer-bg" style="background: url(./source/img/%E5%A4%8F%E8%89%B2%E7%A5%AD.jpg);">
+			</div>
+			<div class="bigplayer-lyric">
+				<div style="position: relative;height: 100%;width: 100%">
+					<div class="bigplayer-bar">
+						<span class="bigplayer-btns">
+							<a href="javascript:void(0);" id="bigplayer-btn-share" class="bigplayer-share">Share</a>
+                            <a href="javascript:void(0);" id="bigplayer-btn-download">Download</a>
+							<a href="javascript:void(0);" id="bigplayer-btn-close2">X</a>
+						</span>
+					</div>
+					<div class="bigplayer-lyric-p" id="bigplayer-lyric-p">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-vocal" style="display: none;">
+			<div class="vocal-body block">
+				<div class="all-song-list-btn-back" btn-role="back">
+					<div class="btn-back"></div>
+				</div>
+				<div class="all-song-list-btn-back" btn-role="back-home">
+					<div class="btn-back-home"></div>
+				</div>
+				<div>
+					<div style="text-align: center;">
+					<div class="vocal-img" style="background: url(./source/img/figure/夏色祭.png)" id="vocal-img"></div>
+					</div>
+					<div class="vocal-info">
+						<div class="vocal-info-text">
+							<div class="vocal-name" id="vocal-name">夏色祭</div>
+							<div class="vocal-name-jp" id="vocal-name-jp">夏色 まつり</div>
+							<div class="vocal-links" id="vocal-links">
+							</div>
+							<div>
+							<div class="vocal-btn" id="vocal-btn-playlist-add-all" onclick="ui.song_list_add_all_songs('#app-vocal')">Add all to Playlist</div>
+							<div class="vocal-btn" id="vocal-btn-play-all" onclick="ui.song_list_play_all_songs('#app-vocal')">Play all</div>
+							</div>
+						</div>
+						<div class="song-list" id="vocal-song-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-album" style="display: none;">
+			<div class="vocal-body block">
+				<div class="all-song-list-btn-back" btn-role="back">
+					<div class="btn-back"></div>
+				</div>
+				<div class="all-song-list-btn-back" btn-role="back-home">
+					<div class="btn-back-home"></div>
+				</div>
+				<div>
+					<div style="text-align: center;">
+					<div class="vocal-img" style="background: url(./source/img/figure/夏色祭.png)" id="album-img"></div>
+					</div>
+					<div class="vocal-info">
+						<div class="vocal-info-text">
+							<div class="vocal-name" id="album-name">夏色祭</div>
+							<div class="vocal-name-jp" id="album-name-jp">夏色 まつり</div>
+							<div>
+							<div class="vocal-btn" id="album-btn-playlist-add-all" onclick="ui.song_list_add_all_songs('#app-album')">Add all to Playlist</div>
+							<div class="vocal-btn" id="album-btn-play-all" onclick="ui.song_list_play_all_songs('#app-album')">Play all</div>
+							</div>
+						</div>
+						<div class="song-list" id="album-song-list">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-all-songs" style="display: none">
+			<div class="all-songs-body block">
+				<div style="padding-bottom: 2rem;">
+					<div>
+						<div class="all-song-list-btn-back" btn-role="back">
+							<div class="btn-back"></div>
+						</div>
+						<div class="all-song-list-btn-back" btn-role="back-home">
+							<div class="btn-back-home"></div>
+						</div>
+						<div class="all-song-list-title">All songs</div>
+					</div>
+					<div style="margin-top: 0.5rem; margin-left: 0.5rem;">
+						<input id="search-input" type="text" class="input" placeholder="Search" />
+						<div class="vocal-btn" id="album-btn-playlist-add-all" onclick="ui.song_list_add_all_songs('#all-songs-music-cards-list')">Add all to Playlist</div>
+						<div class="vocal-btn" id="album-btn-play-all" onclick="ui.song_list_play_all_songs('#all-songs-music-cards-list')">Play all</div>
+					</div>
+				</div>
+				<div class="song-list" id="all-songs-music-cards-list">
+					
+				</div>
+			</div>
+		</div>
+		<div id="app-all-figures" style="display: none;">
+			<div class="all-songs-body block">
+				<div style="margin-bottom: 1rem;">
+					<div class="all-song-list-btn-back" btn-role="back">
+						<div class="btn-back"></div>
+					</div>
+					<div class="all-song-list-btn-back" btn-role="back-home">
+						<div class="btn-back-home"></div>
+					</div>
+					<div class="all-song-list-title">All VTube</div>
+				</div>
+				<div id="all-figures-body" style="margin-left: 0.5rem;">
+				</div>
+			</div>
+		</div>
+		<div class="nav-music-card">
+			<div class="nav-music-card-body" id="nav-music-card-body">
+				<div class="nav-text">
+					<div class="nav-music-card-title" id="nav-music-card-title">Vtb-Music</div>
+					<div class="nav-music-card-subtitle" id="nav-music-card-subtitle">...</div>
+				</div>
+				<div class="nav-play-items">
+					<div class="nav-play-bar" id="bar-nav-play"></div>
+					<div class="nav-play-bar-bg" id="nav-play-bar-bg"></div>
+				</div>
+				<div class="nav-play-time" id="nav-play-time">...</div>
+			</div>
+		</div>
+		<footer id="footer" class="footer">
+			<div class="footer-block">
+				<div style="padding-top: 1rem;">Vtb-Music</div>				
+				<div style="font-size: 0.5rem;">Currently<span id="footer-song-cnt"></span> songs are included，<span id="footer-figure-cnt"></span>VTuber</div>
+				<div style="font-size: 0.5rem; margin-top: 0.3rem; font-weight: bold;">All resources of this website are from the network. If there is any infringement, please contact us and we will delete it in time</div>
+			</div>
+		</footer>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+	
+	<script src="./js/data.js?ver=20050401"></script>	
+	<script src="./js/app.js?ver=20050401"></script>
+	<script src="./js/ui-mobile.js?ver=20050401"></script>
+
+	<!-- Data -->
+	<script src="./js/template_en.js"></script>
+	<script src="./source/data/figures.js"></script>
+	<script src="./source/data/albums.js"></script>
+		
+	<!-- Plug -->
+	<script src="./plug/js-cookie.js"></script>
+	<script src="./plug/clipboard.min.js"></script>
+	</body>
+</html>
